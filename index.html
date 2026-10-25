@@ -4,6 +4,8 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
     <title>Unstable Unicorns - Deck Master Pro</title>  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
     <style>  
         :root {  
             --bg-color: #0b0f19;  
@@ -160,76 +162,107 @@
             box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);  
         }  
   
-        /* Card Grid Layout */  
-        .card-grid {  
-            display: grid;  
-            grid-template-columns: 1fr;  
-            gap: 12px;  
-        }  
-        @media(min-width: 600px) {  
-            .card-grid { grid-template-columns: repeat(2, 1fr); }  
-        }  
-        .card-item {  
-            background: rgba(30, 41, 59, 0.65);  
-            border: 1px solid var(--card-border);  
-            border-radius: 16px;  
-            padding: 12px;  
-            display: flex;  
-            flex-direction: column;  
-            justify-content: space-between;  
-            backdrop-filter: blur(10px);  
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);  
-        }  
-        .card-top {  
-            display: flex;  
-            gap: 12px;  
-            align-items: flex-start;  
-            margin-bottom: 10px;  
-        }  
-        .card-photo {  
-            width: 72px;  
-            height: 98px;  
-            border-radius: 10px;  
-            object-fit: cover;  
-            border: 1px solid rgba(255,255,255,0.2);  
-            background-color: #0f172a;  
-            flex-shrink: 0;  
-            cursor: pointer;  
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);  
-        }  
-        .card-info { flex-grow: 1; }  
-        .card-header-row {  
-            display: flex;  
-            justify-content: space-between;  
-            align-items: flex-start;  
-            margin-bottom: 6px;  
-        }  
-        .card-name {  
-            font-size: 0.95rem;  
-            font-weight: 700;  
-            color: #f3e8ff;  
-        }  
-        .card-type {  
-            font-size: 0.6rem;  
-            text-transform: uppercase;  
-            padding: 3px 7px;  
-            border-radius: 6px;  
-            font-weight: 800;  
-            letter-spacing: 0.5px;  
-        }  
-        .type-bebe { background-color: #f472b6; color: #fff; }  
-        .type-basico { background-color: #60a5fa; color: #fff; }  
-        .type-magico { background-color: #a78bfa; color: #fff; }  
-        .type-mejora { background-color: #34d399; color: #fff; }  
-        .type-deterioro { background-color: #f87171; color: #fff; }  
-        .type-magica { background-color: #fbbf24; color: #000; }  
-        .type-instantanea { background-color: #fb7185; color: #fff; }  
-  
-        .card-desc {  
-            font-size: 0.8rem;  
-            color: var(--text-sub);  
-            line-height: 1.35;  
-        }  
+        /* Card Grid Layout: cartas verticales tipo naipe */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        @media(min-width: 600px) {
+            .card-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media(min-width: 900px) {
+            .card-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .card-item {
+            --tipo: #8b5cf6;
+            --tipo-texto: #fff;
+            position: relative;
+            background: #fbf8f1;
+            color: #1f1a17;
+            border: 3px solid var(--tipo);
+            border-radius: 14px;
+            padding: 10px 10px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+        }
+        .card-corner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 42px;
+            height: 42px;
+            background: var(--tipo);
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+            color: var(--tipo-texto);
+            font-size: 1rem;
+            font-weight: 900;
+            padding: 4px 0 0 7px;
+            line-height: 1;
+        }
+        .card-name {
+            font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            text-align: center;
+            line-height: 1.1;
+            min-height: 2.2em;
+            padding: 2px 4px 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border: 3px solid #1f1a17;
+            border-radius: 4px;
+            background-color: #0f172a;
+            cursor: pointer;
+            display: block;
+        }
+        .card-type {
+            align-self: flex-start;
+            font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            padding: 2px 10px 2px 8px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            background: var(--tipo);
+            color: var(--tipo-texto);
+            clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            margin-left: -10px;
+        }
+        .card-desc {
+            font-size: 0.78rem;
+            color: #3b332d;
+            line-height: 1.3;
+            flex-grow: 1;
+        }
+        .card-item .add-btn { padding: 8px; font-size: 0.8rem; }
+        .tipo-instantanea { --tipo: #dc2626; }
+        .tipo-mejora { --tipo: #f97316; }
+        .tipo-deterioro { --tipo: #eab308; --tipo-texto: #1f1a17; }
+        .tipo-magica { --tipo: #65a30d; }
+        .tipo-magico { --tipo: #0ea5e9; }
+        .tipo-basico { --tipo: #6366f1; }
+        .tipo-bebe { --tipo: #c026d3; }
+
+        /* Etiquetas de tipo usadas en la mano */
+        .type-bebe { background-color: #c026d3; color: #fff; }
+        .type-basico { background-color: #6366f1; color: #fff; }
+        .type-magico { background-color: #0ea5e9; color: #fff; }
+        .type-mejora { background-color: #f97316; color: #fff; }
+        .type-deterioro { background-color: #eab308; color: #000; }
+        .type-magica { background-color: #65a30d; color: #fff; }
+        .type-instantanea { background-color: #dc2626; color: #fff; }
         .add-btn {  
             background: var(--accent-gradient);  
             color: white;  
@@ -525,6 +558,8 @@
             basico: "Básico"  
         };  
 
+        const ICONOS_TIPO = { instantanea: '!', mejora: '▲', deterioro: '▼', magica: '✦', magico: '♞', basico: '♘', bebe: '♡' };
+
         // [nombre, tipo, resumen del efecto] — la imagen de cada carta es assets/<id>.svg (id = 101 + posición)
         const LISTA_CARTAS = [
             ["Relinchar", "instantanea", "Cancela la carta que otro jugador intenta jugar; esa carta va al descarte."],
@@ -664,26 +699,19 @@
                 return;  
             }  
   
-            filtradas.forEach(c => {  
-                const div = document.createElement('div');  
-                div.className = 'card-item';  
-                div.innerHTML = `  
-                    <div>  
-                        <div class="card-top">  
-                            <img src="${c.photo || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300'}" class="card-photo" onclick="abrirEditorFoto(${c.id})" title="Toca para cambiar portada">  
-                            <div class="card-info">  
-                                <div class="card-header-row">  
-                                    <span class="card-name">${escapeHtml(c.name)}</span>  
-                                    <span class="card-type type-${c.type}">${c.typeName || tiposMap[c.type] || 'Carta'}</span>  
-                                </div>  
-                                <p class="card-desc">${escapeHtml(c.desc || '')}</p>  
-                            </div>  
-                        </div>  
-                    </div>  
-                    <button class="add-btn" onclick="agregarAMano(${c.id})">+ Añadir a mano</button>  
-                `;  
-                container.appendChild(div);  
-            });  
+            filtradas.forEach(c => {
+                const div = document.createElement('div');
+                div.className = `card-item tipo-${c.type}`;
+                div.innerHTML = `
+                    <span class="card-corner">${ICONOS_TIPO[c.type] || '•'}</span>
+                    <span class="card-name">${escapeHtml(c.name)}</span>
+                    <img src="${c.photo || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300'}" class="card-photo" onclick="abrirEditorFoto(${c.id})" title="Toca para cambiar portada">
+                    <span class="card-type">${c.typeName || tiposMap[c.type] || 'Carta'}</span>
+                    <p class="card-desc">${escapeHtml(c.desc || '')}</p>
+                    <button class="add-btn" onclick="agregarAMano(${c.id})">+ Añadir a mano</button>
+                `;
+                container.appendChild(div);
+            });
         }  
   
         function cambiarCategoria(cat, ev) {  
