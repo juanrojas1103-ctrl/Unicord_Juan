@@ -560,117 +560,37 @@
 
         const ICONOS_TIPO = { instantanea: '!', mejora: '▲', deterioro: '▼', magica: '✦', magico: '♞', basico: '♘', bebe: '♡' };
 
-        // [nombre, tipo, resumen del efecto] — la imagen de cada carta es assets/<id>.svg (id = 101 + posición)
-        const LISTA_CARTAS = [
-            ["Relinchar", "instantanea", "Cancela la carta que otro jugador intenta jugar; esa carta va al descarte."],
-            ["Super Relincho", "instantanea", "Cancela una carta que se intenta jugar. No se puede frenar con Relinchar."],
-
-            ["Establo Pequeño", "deterioro", "Tu Establo admite como máximo 5 Unicornios."],
-            ["Ritual Sádico", "deterioro", "Al inicio de tu turno sacrificas un Unicornio y robas una carta."],
-            ["Establo Roto", "deterioro", "No puedes jugar Mejoras mientras la tengas."],
-            ["Vigila-Bebés", "deterioro", "Juegas con tu mano a la vista de todos."],
-            ["Ralentización", "deterioro", "No puedes jugar cartas Instantáneas."],
-            ["Pandamonium", "deterioro", "Tus Unicornios cuentan como Pandas: lo que afecta a Unicornios no les afecta."],
-            ["Alambre de Espino", "deterioro", "Descartas una carta cada vez que un Unicornio entra o sale de tu Establo."],
-            ["Luz Cegadora", "deterioro", "Los poderes de tus Unicornios quedan anulados."],
-
-            ["Ritual de Invocación", "mejora", "Al inicio de tu turno: descarta 2 Unicornios y trae uno del descarte a tu Establo."],
-            ["Doble Comba", "mejora", "Al inicio de tu turno: puedes jugar 2 cartas en vez de 1."],
-            ["Aura Arcoíris", "mejora", "Tus Unicornios no pueden ser destruidos."],
-            ["Lazo de Unicornio", "mejora", "Al inicio de tu turno tomas prestado un Unicornio ajeno; lo devuelves al terminar."],
-            ["¡Hurra!", "mejora", "Tus cartas no pueden ser frenadas con Relinchar."],
-            ["Cola Extra", "mejora", "Requiere un Unicornio Básico. Al inicio de tu turno robas una carta extra."],
-            ["Bomba Brillante", "mejora", "Al inicio de tu turno: sacrifica una carta tuya para destruir una de otro jugador."],
-            ["Melena Arcoíris", "mejora", "Requiere un Unicornio Básico. Al inicio de tu turno bajas un Básico de tu mano al Establo."],
-
-            ["Trato Injusto", "magica", "Cambias tu mano completa con la de otro jugador."],
-            ["Intercambio de Unicornios", "magica", "Cambias un Unicornio tuyo por uno del Establo de otro jugador."],
-            ["Botón de Reseteo", "magica", "Todos sacrifican sus Mejoras y Deterioros; el descarte vuelve al mazo de robo."],
-            ["Robo Flagrante", "magica", "Miras la mano de un jugador y te quedas con una carta."],
-            ["Agitar", "magica", "Mezclas esta carta, tu mano y el descarte en el mazo, y robas 5."],
-            ["Vórtice Místico", "magica", "Todos descartan una carta; el descarte se mezcla con el mazo de robo."],
-            ["Veneno", "magica", "Destruye un Unicornio."],
-            ["Tornado Brillante", "magica", "Una carta del Establo de cada jugador vuelve a la mano de su dueño."],
-            ["Blanco Fijado", "magica", "Elimina (sacrificando o destruyendo) una Mejora o un Deterioro."],
-            ["Buen Negocio", "magica", "Robas 3 cartas y descartas 1."],
-            ["Dos-por-Uno", "magica", "Sacrificas 1 carta y destruyes 2."],
-            ["Rayo Encogedor", "magica", "Todos los Unicornios de un Establo se cambian por Bebés de la Guardería."],
-            ["Reorientar", "magica", "Mueve una Mejora o un Deterioro de un Establo a otro."],
-            ["Cambio de Suerte", "magica", "Robas 2, descartas 3 y juegas un turno extra."],
-            ["Coz", "magica", "Devuelve una carta de un Establo a la mano de su dueño, que luego descarta una."],
-
-            ["Narval Seductor", "magico", "Al entrar: te llevas una Mejora del Establo de otro jugador."],
-            ["Unicornio Veloz", "magico", "Al entrar: recuperas una Instantánea del descarte. Si muere, vuelve a tu mano."],
-            ["Unicornio Molesto", "magico", "Al entrar: un jugador elegido descarta una carta. Si muere, vuelve a tu mano."],
-            ["El Gran Narval", "magico", "Al entrar: buscas en el mazo una carta de Narval y la tomas."],
-            ["Narval con Clase", "magico", "Al entrar: buscas en el mazo una Mejora y la tomas."],
-            ["Unicornio Sirena", "magico", "Al entrar: devuelves una carta de cualquier Establo a la mano de su dueño."],
-            ["Narval Pirata", "magico", "Al entrar: buscas en el mazo un Deterioro y lo tomas."],
-            ["Tibucornio", "magico", "Al entrar: puedes destruir un Unicornio, pero entonces sacrificas esta carta."],
-            ["Caballero Negro", "magico", "Se sacrifica en lugar de otro Unicornio tuyo que iba a ser destruido."],
-            ["Unicornio Fénix", "magico", "Al entrar descartas una carta. Si muere, revive si puedes descartar."],
-            ["Unicornio Majestuoso", "magico", "Al entrar: recuperas un Unicornio del descarte a tu mano. Si muere, vuelve a tu mano."],
-            ["Cuerno de Maíz", "magico", "Al entrar: robas 2 y descartas 1."],
-            ["Unicornio Mariposa", "magico", "Al entrar: recuperas una Mágica del descarte. Si muere, vuelve a tu mano."],
-            ["Unicornio Codicioso", "magico", "Al entrar robas una carta. Si muere, vuelve a tu mano."],
-            ["Unicornio Angelical", "magico", "Al inicio de tu turno: sacrifícalo para traer un Unicornio del descarte a tu Establo."],
-            ["Reina Unicornio", "magico", "Los demás jugadores no pueden jugar Unicornios Básicos."],
-            ["U.S.A.Cornio", "magico", "Al entrar: robas una carta al azar de la mano de otro jugador."],
-            ["Unicornio Descomunal", "magico", "Cuenta como 2 Unicornios, pero no puedes jugar Instantáneas."],
-            ["Unicornio Seductor", "magico", "Al entrar: te llevas un Unicornio ajeno; si esta carta sale, el Unicornio vuelve a su dueño."],
-            ["Llamacornio", "magico", "Al entrar: todos descartan una carta y el descarte se mezcla con el mazo."],
-            ["Unicornio Destructor", "magico", "Al entrar: cada jugador sacrifica un Unicornio."],
-            ["Unicornio Zombi", "magico", "Al inicio de tu turno: descarta un Unicornio para revivir otro del descarte; tu turno termina."],
-            ["Unicornio con Motosierra", "magico", "Al entrar: elimina una Mejora o un Deterioro."],
-            ["Perricornio", "magico", "Al final de tu turno pasa al Establo de tu izquierda. No se puede sacrificar ni destruir."],
-            ["Unicornio Arcoíris", "magico", "Al entrar: bajas también un Unicornio Básico de tu mano."],
-            ["Gatocornio", "magico", "No puede ser destruido ni afectado por cartas Mágicas."],
-            ["Unicornio Navajero", "magico", "Si es sacrificado o destruido, destruyes un Unicornio."],
-            ["Unicornio Ultrafértil", "magico", "Al inicio de tu turno: descarta una carta para sumar un Bebé de la Guardería."],
-            ["Rinocornio", "magico", "Al inicio de tu turno: destruye un Unicornio y tu turno termina."],
-            ["Torpedo Narval", "magico", "Al entrar: sacrificas todos los Deterioros de tu Establo."],
-            ["Gamecorn", "magico", "Al entrar: bajas una Mejora de tu mano directo a tu Establo."],
-            ["El Más Glorioso", "magico", "Al entrar: cada jugador te da una carta de su mano."],
-            ["El Cuerno Más Largo", "magico", "Al inicio de tu turno tomas prestado un Unicornio ajeno; lo devuelves al final."],
-            ["Unicornio Legendario", "magico", "Al entrar: todos descartan una carta. Si muere, vuelve a tu mano."],
-            ["Unicornio Cósmico", "magico", "Al entrar: se juntan manos, descarte y mazo, se baraja todo y cada uno roba 5."],
-            ["Unicornio Eternamente Joven", "magico", "Al inicio de tu turno: cambias un Unicornio de cualquier Establo por un Bebé."],
-
-            ["Narval", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Gafas)", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Flores)", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Barba)", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Selfie)", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Polo)", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Calabaza)", "basico", "Sin poder especial."],
-            ["Unicornio Básico (Emojis)", "basico", "Sin poder especial."],
-
-            ["Bebé Unicornio", "bebe", "Si sale de tu Establo o vuelve a tu mano, regresa a la Guardería."],
-            ["Bebé Narval", "bebe", "Si sale de tu Establo o vuelve a tu mano, regresa a la Guardería."]
-        ];
-
-        const CARTAS_DEFAULT = LISTA_CARTAS.map(([name, type, desc], i) => ({
-            id: 101 + i, name, type, typeName: tiposMap[type], photo: `assets/${101 + i}.svg`, desc
-        }));
-
-        // Al cambiar la lista de cartas, sube este número para que todos reciban las nuevas
-        const VERSION_CARTAS = 3;
+        // Las cartas (nombre, tipo, descripción e imagen) están en assets/cartas.json;
+        // las imágenes, en la misma carpeta assets/
+        let CARTAS_DEFAULT = [];
 
         let cartas = [];
         try {
             const guardadas = localStorage.getItem('uu_cartas');
             if (guardadas) cartas = JSON.parse(guardadas);
         } catch(e) { cartas = []; }
+        if (!Array.isArray(cartas)) cartas = [];
 
-        let versionGuardada = 0;
-        try { versionGuardada = Number(localStorage.getItem('uu_version')) || 0; } catch(e) {}
+        async function cargarCartas() {
+            const resp = await fetch('assets/cartas.json', { cache: 'no-cache' });
+            const datos = await resp.json();
+            CARTAS_DEFAULT = datos.cartas.map(c => ({
+                id: c.id, name: c.nombre, type: c.tipo, typeName: tiposMap[c.tipo],
+                photo: 'assets/' + c.imagen, desc: c.descripcion
+            }));
 
-        if (!Array.isArray(cartas) || cartas.length === 0 || versionGuardada !== VERSION_CARTAS) {
-            // Conserva las cartas creadas a mano (su id es una fecha)
-            const propias = Array.isArray(cartas) ? cartas.filter(c => c.id > 1e12) : [];
-            cartas = [...CARTAS_DEFAULT, ...propias];
-            guardarEnStorage('uu_cartas', cartas);
-            try { localStorage.setItem('uu_version', String(VERSION_CARTAS)); } catch(e) {}
+            // Si cartas.json cambió desde la última visita, se usan las cartas nuevas
+            const firma = JSON.stringify(datos.cartas);
+            let firmaGuardada = null;
+            try { firmaGuardada = localStorage.getItem('uu_firma'); } catch(e) {}
+
+            if (cartas.length === 0 || firma !== firmaGuardada) {
+                // Conserva las cartas creadas a mano (su id es una fecha)
+                const propias = cartas.filter(c => c.id > 1e12);
+                cartas = [...CARTAS_DEFAULT, ...propias];
+                guardarEnStorage('uu_cartas', cartas);
+                try { localStorage.setItem('uu_firma', firma); } catch(e) {}
+            }
         }
   
         function guardarEnStorage(key, value) {  
@@ -891,8 +811,9 @@
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');  
         }  
   
-        renderizarCartas();  
-        actualizarManoUI();  
+        cargarCartas()
+            .catch(e => console.warn('No se pudo leer assets/cartas.json', e))
+            .finally(() => { renderizarCartas(); actualizarManoUI(); });
     </script>  
 </body>  
 </html>  
