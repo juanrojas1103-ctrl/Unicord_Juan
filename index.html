@@ -472,8 +472,11 @@
     <!-- Quick Launcher Drawer -->  
     <div class="quick-drawer" id="quickDrawer">  
         <button class="drawer-btn" onclick="abrirModalCrear(); toggleLauncherDrawer();">➕ Añadir Carta Personalizada</button>  
-        <button class="drawer-btn" onclick="exportarDatos(); toggleLauncherDrawer();">📥 Guardar / Exportar Copia JSON</button>  
-        <button class="drawer-btn danger" onclick="restaurarPorDefecto(); toggleLauncherDrawer();">🔄 Restaurar Baraja por Defecto</button>  
+        <button class="drawer-btn" onclick="compartirVersion(); toggleLauncherDrawer();">🔗 Compartir mi versión (copiar link)</button>
+        <button class="drawer-btn" onclick="exportarDatos(); toggleLauncherDrawer();">📥 Guardar copia de seguridad</button>
+        <button class="drawer-btn" onclick="document.getElementById('inputImportar').click(); toggleLauncherDrawer();">📤 Cargar copia de seguridad</button>
+        <input type="file" id="inputImportar" accept="application/json,.json" style="display:none" onchange="importarDatos(event)">
+        <button class="drawer-btn danger" onclick="restaurarPorDefecto(); toggleLauncherDrawer();">🔄 Borrar mis cambios</button>
     </div>  
   
     <input type="text" id="searchInput" class="search-box" placeholder="🔍 Buscar por nombre o efecto..." oninput="filtrarCartas()">  
@@ -560,37 +563,141 @@
 
         const ICONOS_TIPO = { instantanea: '!', mejora: '▲', deterioro: '▼', magica: '✦', magico: '♞', basico: '♘', bebe: '♡' };
 
-        // Las cartas (nombre, tipo, descripción e imagen) están en assets/cartas.json;
-        // las imágenes, en la misma carpeta assets/
-        let CARTAS_DEFAULT = [];
+        // Los datos de las cartas están en cartas.json y sus imágenes en assets/.
+        // Para actualizar cartas solo hace falta tocar esos dos lugares.
+        const ARCHIVO_CARTAS = 'cartas.json';
+        const CARPETA_IMAGENES = 'assets/';
+        const COLORES_TIPO = { instantanea: '#dc2626', mejora: '#f97316', deterioro: '#eab308', magica: '#65a30d', magico: '#0ea5e9', basico: '#6366f1', bebe: '#c026d3' };
 
+        let CARTAS_DEFAULT = [];
         let cartas = [];
+
+        // Tus cambios se guardan aparte de cartas.json, así nunca se pisan cuando cambia el JSON:
+        // "editadas" = lo que cambiaste de una carta del JSON; "propias" = cartas que creaste
+        let cambios = { editadas: {}, propias: [] };
         try {
-            const guardadas = localStorage.getItem('uu_cartas');
-            if (guardadas) cartas = JSON.parse(guardadas);
-        } catch(e) { cartas = []; }
-        if (!Array.isArray(cartas)) cartas = [];
+            const guardados = JSON.parse(localStorage.getItem('uu_cambios'));
+            if (guardados) {
+                cambios = guardados;
+            } else {
+                // Recupera las cartas propias guardadas por la versión anterior de la app
+                const viejas = JSON.parse(localStorage.getItem('uu_cartas') || '[]');
+                if (Array.isArray(viejas)) cambios.propias = viejas.filter(c => c.id > 1e12);
+            }
+        } catch(e) {}
+        cambios.editadas = cambios.editadas || {};
+        cambios.propias = Array.isArray(cambios.propias) ? cambios.propias : [];
+
+        function guardarCambios() {
+            guardarEnStorage('uu_cambios', cambios);
+        }
+
+        // Cartas que se muestran = cartas.json + tus cambios encima + tus cartas propias
+        function aplicarCambios() {
+            cartas = [
+                ...CARTAS_DEFAULT.map(c => ({ ...c, ...(cambios.editadas[c.id] || {}) })),
+                ...cambios.propias
+            ];
+        }
 
         async function cargarCartas() {
-            const resp = await fetch('assets/cartas.json', { cache: 'no-cache' });
-            const datos = await resp.json();
-            CARTAS_DEFAULT = datos.cartas.map(c => ({
-                id: c.id, name: c.nombre, type: c.tipo, typeName: tiposMap[c.tipo],
-                photo: 'assets/' + c.imagen, desc: c.descripcion
-            }));
-
-            // Si cartas.json cambió desde la última visita, se usan las cartas nuevas
-            const firma = JSON.stringify(datos.cartas);
-            let firmaGuardada = null;
-            try { firmaGuardada = localStorage.getItem('uu_firma'); } catch(e) {}
-
-            if (cartas.length === 0 || firma !== firmaGuardada) {
-                // Conserva las cartas creadas a mano (su id es una fecha)
-                const propias = cartas.filter(c => c.id > 1e12);
-                cartas = [...CARTAS_DEFAULT, ...propias];
-                guardarEnStorage('uu_cartas', cartas);
-                try { localStorage.setItem('uu_firma', firma); } catch(e) {}
+            try {
+                const resp = await fetch(ARCHIVO_CARTAS, { cache: 'no-cache' });
+                const datos = await resp.json();
+                // Recorre el JSON: cada carta usa su campo "imagen" como referencia al archivo en assets/
+                CARTAS_DEFAULT = datos.cartas.map(c => ({
+                    id: c.id,
+                    name: c.titulo,
+                    type: c.tipo,
+                    typeName: c.tipoNombre || tiposMap[c.tipo],
+                    desc: c.descripcion,
+                    imagen: c.imagen,
+                    photo: CARPETA_IMAGENES + c.imagen
+                }));
+            } finally {
+                // Si se abrió un link compartido, se muestra esa versión y queda guardada
+                const compartidos = await leerLinkCompartido();
+                if (compartidos) {
+                    cambios = compartidos;
+                    guardarCambios();
+                }
+                aplicarCambios();
             }
+        }
+
+        // ---- Compartir tu versión por link ----
+        // El link lleva tus cambios comprimidos después de "#v=", así quien lo abre ve tu última versión
+        function aBase64Url(bytes) {
+            let bin = '';
+            bytes.forEach(b => bin += String.fromCharCode(b));
+            return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        }
+
+        function deBase64Url(texto) {
+            const bin = atob(texto.replace(/-/g, '+').replace(/_/g, '/'));
+            return Uint8Array.from(bin, ch => ch.charCodeAt(0));
+        }
+
+        async function comprimir(texto) {
+            if (!window.CompressionStream) return 'j' + aBase64Url(new TextEncoder().encode(texto));
+            const stream = new Blob([texto]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+            return 'z' + aBase64Url(new Uint8Array(await new Response(stream).arrayBuffer()));
+        }
+
+        async function descomprimir(codigo) {
+            const bytes = deBase64Url(codigo.slice(1));
+            if (codigo[0] === 'j') return new TextDecoder().decode(bytes);
+            const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+            return await new Response(stream).text();
+        }
+
+        async function leerLinkCompartido() {
+            const m = location.hash.match(/^#v=(.+)$/);
+            if (!m) return null;
+            try {
+                const datos = JSON.parse(await descomprimir(m[1]));
+                return {
+                    editadas: datos.editadas || {},
+                    propias: Array.isArray(datos.propias) ? datos.propias : []
+                };
+            } catch(e) {
+                console.warn('El link compartido no es válido', e);
+                return null;
+            }
+        }
+
+        async function compartirVersion() {
+            // Las fotos subidas desde el dispositivo son muy pesadas para un link: se omiten
+            let fotosOmitidas = 0;
+            const sinFotoLocal = c => {
+                if (c.photo && c.photo.startsWith('data:')) {
+                    fotosOmitidas++;
+                    const { photo, ...resto } = c;
+                    return resto;
+                }
+                return c;
+            };
+            const editadas = {};
+            Object.entries(cambios.editadas).forEach(([id, c]) => editadas[id] = sinFotoLocal(c));
+            const datos = { editadas, propias: cambios.propias.map(sinFotoLocal) };
+
+            const link = location.origin + location.pathname + '#v=' + await comprimir(JSON.stringify(datos));
+            const aviso = fotosOmitidas
+                ? `\n\nOjo: ${fotosOmitidas} foto(s) subidas desde tu dispositivo no viajan en el link. Para compartirlas, usá un link de imagen o subilas a assets/.`
+                : '';
+            try {
+                await navigator.clipboard.writeText(link);
+                alert('¡Link copiado! Quien lo abra va a ver tu versión actual.' + aviso);
+            } catch(e) {
+                prompt('Copiá este link para compartir tu versión:' + aviso, link);
+            }
+        }
+
+        // Imagen de reemplazo (color del tipo + ícono) si falta el archivo en assets/
+        function imagenDeRespaldo(tipo) {
+            const color = COLORES_TIPO[tipo] || '#8b5cf6';
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="${color}"/><text x="150" y="165" font-size="120" text-anchor="middle" dominant-baseline="middle" fill="#fff" opacity="0.85">${ICONOS_TIPO[tipo] || '?'}</text></svg>`;
+            return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
         }
   
         function guardarEnStorage(key, value) {  
@@ -625,7 +732,7 @@
                 div.innerHTML = `
                     <span class="card-corner">${ICONOS_TIPO[c.type] || '•'}</span>
                     <span class="card-name">${escapeHtml(c.name)}</span>
-                    <img src="${c.photo || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300'}" class="card-photo" onclick="abrirEditorFoto(${c.id})" title="Toca para cambiar portada">
+                    <img src="${c.photo || imagenDeRespaldo(c.type)}" alt="${escapeHtml(c.name)}" class="card-photo" onerror="this.onerror=null; this.src=imagenDeRespaldo('${c.type}')" onclick="abrirEditorFoto(${c.id})" title="Toca para cambiar portada">
                     <span class="card-type">${c.typeName || tiposMap[c.type] || 'Carta'}</span>
                     <p class="card-desc">${escapeHtml(c.desc || '')}</p>
                     <button class="add-btn" onclick="agregarAMano(${c.id})">+ Añadir a mano</button>
@@ -716,28 +823,27 @@
                 }  
             }  
   
-            if (editandoId !== null) {  
-                const index = cartas.findIndex(c => c.id === editandoId);  
-                if (index !== -1) {  
-                    cartas[index].name = nombre;  
-                    cartas[index].type = tipo;  
-                    cartas[index].typeName = tiposMap[tipo];  
-                    cartas[index].desc = desc;  
-                    cartas[index].photo = fotoFinal;  
-                }  
-            } else {  
-                const nueva = {  
-                    id: Date.now(),  
-                    name: nombre,  
-                    type: tipo,  
-                    typeName: tiposMap[tipo],  
-                    photo: fotoFinal,  
-                    desc: desc || "Sin descripción."  
-                };  
-                cartas.push(nueva);  
-            }  
-  
-            guardarEnStorage('uu_cartas', cartas);  
+            const typeName = (CARTAS_DEFAULT.find(d => d.type === tipo) || {}).typeName || tiposMap[tipo];
+            const datosCarta = { name: nombre, type: tipo, typeName, desc, photo: fotoFinal };
+            const original = CARTAS_DEFAULT.find(c => c.id === editandoId);
+            const propia = cambios.propias.find(c => c.id === editandoId);
+
+            if (original) {
+                // Guarda solo lo que cambiaste, así lo demás sigue tomando lo de cartas.json
+                const diferencias = {};
+                Object.keys(datosCarta).forEach(k => {
+                    if (datosCarta[k] !== original[k]) diferencias[k] = datosCarta[k];
+                });
+                if (Object.keys(diferencias).length) cambios.editadas[editandoId] = diferencias;
+                else delete cambios.editadas[editandoId];
+            } else if (propia) {
+                Object.assign(propia, datosCarta);
+            } else {
+                cambios.propias.push({ id: Date.now(), ...datosCarta, desc: desc || "Sin descripción." });
+            }
+
+            guardarCambios();
+            aplicarCambios();
             cerrarModal();  
             renderizarCartas(document.getElementById('searchInput').value);  
         }  
@@ -774,7 +880,7 @@
                 html += `  
                     <div class="hand-card-swipe">  
                         <button class="remove-card-btn" onclick="quitarDeMano(${item.instanceId})" title="Quitar de mano">&times;</button>  
-                        <img src="${item.photo || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300'}" class="hand-swipe-thumb">  
+                        <img src="${item.photo || imagenDeRespaldo(item.type)}" class="hand-swipe-thumb" onerror="this.onerror=null; this.src=imagenDeRespaldo('${item.type}')">  
                         <div class="hand-swipe-info">  
                             <div class="hand-swipe-title">${escapeHtml(item.name)}</div>  
                             <div class="hand-swipe-desc">${escapeHtml(item.desc || '')}</div>  
@@ -786,10 +892,11 @@
         }  
   
         function restaurarPorDefecto() {  
-            if (confirm("¿Quieres restaurar la lista de cartas por defecto?")) {  
-                cartas = [...CARTAS_DEFAULT];  
-                miMano = [];  
-                guardarEnStorage('uu_cartas', cartas);  
+            if (confirm("¿Borrar TODOS tus cambios y volver a las cartas originales de cartas.json?\n\nNo se puede deshacer. Si querés, primero guardá una copia de seguridad.")) {
+                cambios = { editadas: {}, propias: [] };
+                guardarCambios();
+                aplicarCambios();
+                miMano = [];
                 guardarEnStorage('uu_mano', miMano);  
                 renderizarCartas();  
                 actualizarManoUI();  
@@ -797,22 +904,58 @@
         }  
   
         function exportarDatos() {  
-            const datos = { cartas, mano: miMano };  
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(datos));  
-            const downloadAnchor = document.createElement('a');  
-            downloadAnchor.setAttribute("href", dataStr);  
-            downloadAnchor.setAttribute("download", "unstable_unicorns_backup.json");  
-            document.body.appendChild(downloadAnchor);  
-            downloadAnchor.click();  
-            downloadAnchor.remove();  
-        }  
+            const datos = { cambios, mano: miMano };
+            const archivo = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.href = URL.createObjectURL(archivo);
+            downloadAnchor.download = "unicornios_mis_cambios.json";
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Carga una copia de seguridad guardada con "Guardar copia de seguridad"
+        function importarDatos(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                try {
+                    const datos = JSON.parse(e.target.result);
+                    if (datos.cambios) {
+                        cambios = {
+                            editadas: datos.cambios.editadas || {},
+                            propias: Array.isArray(datos.cambios.propias) ? datos.cambios.propias : []
+                        };
+                    } else if (Array.isArray(datos.cartas)) {
+                        // Copias hechas con la versión anterior de la app
+                        cambios = { editadas: {}, propias: datos.cartas.filter(c => c.id > 1e12) };
+                    } else {
+                        throw new Error('Formato desconocido');
+                    }
+                    if (Array.isArray(datos.mano)) {
+                        miMano = datos.mano;
+                        guardarEnStorage('uu_mano', miMano);
+                    }
+                    guardarCambios();
+                    aplicarCambios();
+                    renderizarCartas(document.getElementById('searchInput').value);
+                    actualizarManoUI();
+                    alert('Copia de seguridad cargada.');
+                } catch(err) {
+                    alert('Ese archivo no es una copia de seguridad válida.');
+                }
+                event.target.value = '';
+            };
+            reader.readAsText(file);
+        }
   
         function escapeHtml(str) {  
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');  
         }  
   
         cargarCartas()
-            .catch(e => console.warn('No se pudo leer assets/cartas.json', e))
+            .catch(e => console.warn('No se pudo leer ' + ARCHIVO_CARTAS, e))
             .finally(() => { renderizarCartas(); actualizarManoUI(); });
     </script>  
 </body>  

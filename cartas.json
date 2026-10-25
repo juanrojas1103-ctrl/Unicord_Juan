@@ -1,0 +1,636 @@
+{
+  "cartas": [
+    {
+      "id": 1,
+      "titulo": "Relinchar",
+      "tipo": "instantanea",
+      "tipoNombre": "Instantánea",
+      "descripcion": "Cancela la carta que otro jugador intenta jugar; esa carta va al descarte.",
+      "imagen": "img-1.png"
+    },
+    {
+      "id": 2,
+      "titulo": "Super Relincho",
+      "tipo": "instantanea",
+      "tipoNombre": "Instantánea",
+      "descripcion": "Cancela una carta que se intenta jugar. No se puede frenar con Relinchar.",
+      "imagen": "img-2.png"
+    },
+    {
+      "id": 3,
+      "titulo": "Establo Pequeño",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "Tu Establo admite como máximo 5 Unicornios.",
+      "imagen": "img-3.png"
+    },
+    {
+      "id": 4,
+      "titulo": "Ritual Sádico",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "Al inicio de tu turno sacrificas un Unicornio y robas una carta.",
+      "imagen": "img-4.png"
+    },
+    {
+      "id": 5,
+      "titulo": "Establo Roto",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "No puedes jugar Mejoras mientras la tengas.",
+      "imagen": "img-5.png"
+    },
+    {
+      "id": 6,
+      "titulo": "Vigila-Bebés",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "Juegas con tu mano a la vista de todos.",
+      "imagen": "img-6.png"
+    },
+    {
+      "id": 7,
+      "titulo": "Ralentización",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "No puedes jugar cartas Instantáneas.",
+      "imagen": "img-7.png"
+    },
+    {
+      "id": 8,
+      "titulo": "Pandamonium",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "Tus Unicornios cuentan como Pandas: lo que afecta a Unicornios no les afecta.",
+      "imagen": "img-8.png"
+    },
+    {
+      "id": 9,
+      "titulo": "Alambre de Espino",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "Descartas una carta cada vez que un Unicornio entra o sale de tu Establo.",
+      "imagen": "img-9.png"
+    },
+    {
+      "id": 10,
+      "titulo": "Luz Cegadora",
+      "tipo": "deterioro",
+      "tipoNombre": "Deterioro",
+      "descripcion": "Los poderes de tus Unicornios quedan anulados.",
+      "imagen": "img-10.png"
+    },
+    {
+      "id": 11,
+      "titulo": "Ritual de Invocación",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Al inicio de tu turno: descarta 2 Unicornios y trae uno del descarte a tu Establo.",
+      "imagen": "img-11.png"
+    },
+    {
+      "id": 12,
+      "titulo": "Doble Comba",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Al inicio de tu turno: puedes jugar 2 cartas en vez de 1.",
+      "imagen": "img-12.png"
+    },
+    {
+      "id": 13,
+      "titulo": "Aura Arcoíris",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Tus Unicornios no pueden ser destruidos.",
+      "imagen": "img-13.png"
+    },
+    {
+      "id": 14,
+      "titulo": "Lazo de Unicornio",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Al inicio de tu turno tomas prestado un Unicornio ajeno; lo devuelves al terminar.",
+      "imagen": "img-14.png"
+    },
+    {
+      "id": 15,
+      "titulo": "¡Hurra!",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Tus cartas no pueden ser frenadas con Relinchar.",
+      "imagen": "img-15.png"
+    },
+    {
+      "id": 16,
+      "titulo": "Cola Extra",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Requiere un Unicornio Básico. Al inicio de tu turno robas una carta extra.",
+      "imagen": "img-16.png"
+    },
+    {
+      "id": 17,
+      "titulo": "Bomba Brillante",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Al inicio de tu turno: sacrifica una carta tuya para destruir una de otro jugador.",
+      "imagen": "img-17.png"
+    },
+    {
+      "id": 18,
+      "titulo": "Melena Arcoíris",
+      "tipo": "mejora",
+      "tipoNombre": "Mejora",
+      "descripcion": "Requiere un Unicornio Básico. Al inicio de tu turno bajas un Básico de tu mano al Establo.",
+      "imagen": "img-18.png"
+    },
+    {
+      "id": 19,
+      "titulo": "Trato Injusto",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Cambias tu mano completa con la de otro jugador.",
+      "imagen": "img-19.png"
+    },
+    {
+      "id": 20,
+      "titulo": "Intercambio de Unicornios",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Cambias un Unicornio tuyo por uno del Establo de otro jugador.",
+      "imagen": "img-20.png"
+    },
+    {
+      "id": 21,
+      "titulo": "Botón de Reseteo",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Todos sacrifican sus Mejoras y Deterioros; el descarte vuelve al mazo de robo.",
+      "imagen": "img-21.png"
+    },
+    {
+      "id": 22,
+      "titulo": "Robo Flagrante",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Miras la mano de un jugador y te quedas con una carta.",
+      "imagen": "img-22.png"
+    },
+    {
+      "id": 23,
+      "titulo": "Agitar",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Mezclas esta carta, tu mano y el descarte en el mazo, y robas 5.",
+      "imagen": "img-23.png"
+    },
+    {
+      "id": 24,
+      "titulo": "Vórtice Místico",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Todos descartan una carta; el descarte se mezcla con el mazo de robo.",
+      "imagen": "img-24.png"
+    },
+    {
+      "id": 25,
+      "titulo": "Veneno",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Destruye un Unicornio.",
+      "imagen": "img-25.png"
+    },
+    {
+      "id": 26,
+      "titulo": "Tornado Brillante",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Una carta del Establo de cada jugador vuelve a la mano de su dueño.",
+      "imagen": "img-26.png"
+    },
+    {
+      "id": 27,
+      "titulo": "Blanco Fijado",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Elimina (sacrificando o destruyendo) una Mejora o un Deterioro.",
+      "imagen": "img-27.png"
+    },
+    {
+      "id": 28,
+      "titulo": "Buen Negocio",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Robas 3 cartas y descartas 1.",
+      "imagen": "img-28.png"
+    },
+    {
+      "id": 29,
+      "titulo": "Dos-por-Uno",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Sacrificas 1 carta y destruyes 2.",
+      "imagen": "img-29.png"
+    },
+    {
+      "id": 30,
+      "titulo": "Rayo Encogedor",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Todos los Unicornios de un Establo se cambian por Bebés de la Guardería.",
+      "imagen": "img-30.png"
+    },
+    {
+      "id": 31,
+      "titulo": "Reorientar",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Mueve una Mejora o un Deterioro de un Establo a otro.",
+      "imagen": "img-31.png"
+    },
+    {
+      "id": 32,
+      "titulo": "Cambio de Suerte",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Robas 2, descartas 3 y juegas un turno extra.",
+      "imagen": "img-32.png"
+    },
+    {
+      "id": 33,
+      "titulo": "Coz",
+      "tipo": "magica",
+      "tipoNombre": "Mágica",
+      "descripcion": "Devuelve una carta de un Establo a la mano de su dueño, que luego descarta una.",
+      "imagen": "img-33.png"
+    },
+    {
+      "id": 34,
+      "titulo": "Narval Seductor",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: te llevas una Mejora del Establo de otro jugador.",
+      "imagen": "img-34.png"
+    },
+    {
+      "id": 35,
+      "titulo": "Unicornio Veloz",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: recuperas una Instantánea del descarte. Si muere, vuelve a tu mano.",
+      "imagen": "img-35.png"
+    },
+    {
+      "id": 36,
+      "titulo": "Unicornio Molesto",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: un jugador elegido descarta una carta. Si muere, vuelve a tu mano.",
+      "imagen": "img-36.png"
+    },
+    {
+      "id": 37,
+      "titulo": "El Gran Narval",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: buscas en el mazo una carta de Narval y la tomas.",
+      "imagen": "img-37.png"
+    },
+    {
+      "id": 38,
+      "titulo": "Narval con Clase",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: buscas en el mazo una Mejora y la tomas.",
+      "imagen": "img-38.png"
+    },
+    {
+      "id": 39,
+      "titulo": "Unicornio Sirena",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: devuelves una carta de cualquier Establo a la mano de su dueño.",
+      "imagen": "img-39.png"
+    },
+    {
+      "id": 40,
+      "titulo": "Narval Pirata",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: buscas en el mazo un Deterioro y lo tomas.",
+      "imagen": "img-40.png"
+    },
+    {
+      "id": 41,
+      "titulo": "Tibucornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: puedes destruir un Unicornio, pero entonces sacrificas esta carta.",
+      "imagen": "img-41.png"
+    },
+    {
+      "id": 42,
+      "titulo": "Caballero Negro",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Se sacrifica en lugar de otro Unicornio tuyo que iba a ser destruido.",
+      "imagen": "img-42.png"
+    },
+    {
+      "id": 43,
+      "titulo": "Unicornio Fénix",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar descartas una carta. Si muere, revive si puedes descartar.",
+      "imagen": "img-43.png"
+    },
+    {
+      "id": 44,
+      "titulo": "Unicornio Majestuoso",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: recuperas un Unicornio del descarte a tu mano. Si muere, vuelve a tu mano.",
+      "imagen": "img-44.png"
+    },
+    {
+      "id": 45,
+      "titulo": "Cuerno de Maíz",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: robas 2 y descartas 1.",
+      "imagen": "img-45.png"
+    },
+    {
+      "id": 46,
+      "titulo": "Unicornio Mariposa",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: recuperas una Mágica del descarte. Si muere, vuelve a tu mano.",
+      "imagen": "img-46.png"
+    },
+    {
+      "id": 47,
+      "titulo": "Unicornio Codicioso",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar robas una carta. Si muere, vuelve a tu mano.",
+      "imagen": "img-47.png"
+    },
+    {
+      "id": 48,
+      "titulo": "Unicornio Angelical",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al inicio de tu turno: sacrifícalo para traer un Unicornio del descarte a tu Establo.",
+      "imagen": "img-48.png"
+    },
+    {
+      "id": 49,
+      "titulo": "Reina Unicornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Los demás jugadores no pueden jugar Unicornios Básicos.",
+      "imagen": "img-49.png"
+    },
+    {
+      "id": 50,
+      "titulo": "U.S.A.Cornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: robas una carta al azar de la mano de otro jugador.",
+      "imagen": "img-50.png"
+    },
+    {
+      "id": 51,
+      "titulo": "Unicornio Descomunal",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Cuenta como 2 Unicornios, pero no puedes jugar Instantáneas.",
+      "imagen": "img-51.png"
+    },
+    {
+      "id": 52,
+      "titulo": "Unicornio Seductor",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: te llevas un Unicornio ajeno; si esta carta sale, el Unicornio vuelve a su dueño.",
+      "imagen": "img-52.png"
+    },
+    {
+      "id": 53,
+      "titulo": "Llamacornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: todos descartan una carta y el descarte se mezcla con el mazo.",
+      "imagen": "img-53.png"
+    },
+    {
+      "id": 54,
+      "titulo": "Unicornio Destructor",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: cada jugador sacrifica un Unicornio.",
+      "imagen": "img-54.png"
+    },
+    {
+      "id": 55,
+      "titulo": "Unicornio Zombi",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al inicio de tu turno: descarta un Unicornio para revivir otro del descarte; tu turno termina.",
+      "imagen": "img-55.png"
+    },
+    {
+      "id": 56,
+      "titulo": "Unicornio con Motosierra",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: elimina una Mejora o un Deterioro.",
+      "imagen": "img-56.png"
+    },
+    {
+      "id": 57,
+      "titulo": "Perricornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al final de tu turno pasa al Establo de tu izquierda. No se puede sacrificar ni destruir.",
+      "imagen": "img-57.png"
+    },
+    {
+      "id": 58,
+      "titulo": "Unicornio Arcoíris",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: bajas también un Unicornio Básico de tu mano.",
+      "imagen": "img-58.png"
+    },
+    {
+      "id": 59,
+      "titulo": "Gatocornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "No puede ser destruido ni afectado por cartas Mágicas.",
+      "imagen": "img-59.png"
+    },
+    {
+      "id": 60,
+      "titulo": "Unicornio Navajero",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Si es sacrificado o destruido, destruyes un Unicornio.",
+      "imagen": "img-60.png"
+    },
+    {
+      "id": 61,
+      "titulo": "Unicornio Ultrafértil",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al inicio de tu turno: descarta una carta para sumar un Bebé de la Guardería.",
+      "imagen": "img-61.png"
+    },
+    {
+      "id": 62,
+      "titulo": "Rinocornio",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al inicio de tu turno: destruye un Unicornio y tu turno termina.",
+      "imagen": "img-62.png"
+    },
+    {
+      "id": 63,
+      "titulo": "Torpedo Narval",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: sacrificas todos los Deterioros de tu Establo.",
+      "imagen": "img-63.png"
+    },
+    {
+      "id": 64,
+      "titulo": "Gamecorn",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: bajas una Mejora de tu mano directo a tu Establo.",
+      "imagen": "img-64.png"
+    },
+    {
+      "id": 65,
+      "titulo": "El Más Glorioso",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: cada jugador te da una carta de su mano.",
+      "imagen": "img-65.png"
+    },
+    {
+      "id": 66,
+      "titulo": "El Cuerno Más Largo",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al inicio de tu turno tomas prestado un Unicornio ajeno; lo devuelves al final.",
+      "imagen": "img-66.png"
+    },
+    {
+      "id": 67,
+      "titulo": "Unicornio Legendario",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: todos descartan una carta. Si muere, vuelve a tu mano.",
+      "imagen": "img-67.png"
+    },
+    {
+      "id": 68,
+      "titulo": "Unicornio Cósmico",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al entrar: se juntan manos, descarte y mazo, se baraja todo y cada uno roba 5.",
+      "imagen": "img-68.png"
+    },
+    {
+      "id": 69,
+      "titulo": "Unicornio Eternamente Joven",
+      "tipo": "magico",
+      "tipoNombre": "Unicornio Mágico",
+      "descripcion": "Al inicio de tu turno: cambias un Unicornio de cualquier Establo por un Bebé.",
+      "imagen": "img-69.png"
+    },
+    {
+      "id": 70,
+      "titulo": "Narval",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-70.png"
+    },
+    {
+      "id": 71,
+      "titulo": "Unicornio Básico (Gafas)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-71.png"
+    },
+    {
+      "id": 72,
+      "titulo": "Unicornio Básico (Flores)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-72.png"
+    },
+    {
+      "id": 73,
+      "titulo": "Unicornio Básico (Barba)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-73.png"
+    },
+    {
+      "id": 74,
+      "titulo": "Unicornio Básico (Selfie)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-74.png"
+    },
+    {
+      "id": 75,
+      "titulo": "Unicornio Básico (Polo)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-75.png"
+    },
+    {
+      "id": 76,
+      "titulo": "Unicornio Básico (Calabaza)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-76.png"
+    },
+    {
+      "id": 77,
+      "titulo": "Unicornio Básico (Emojis)",
+      "tipo": "basico",
+      "tipoNombre": "Unicornio Básico",
+      "descripcion": "Sin poder especial.",
+      "imagen": "img-77.png"
+    },
+    {
+      "id": 78,
+      "titulo": "Bebé Unicornio",
+      "tipo": "bebe",
+      "tipoNombre": "Bebé Unicornio",
+      "descripcion": "Si sale de tu Establo o vuelve a tu mano, regresa a la Guardería.",
+      "imagen": "img-78.png"
+    },
+    {
+      "id": 79,
+      "titulo": "Bebé Narval",
+      "tipo": "bebe",
+      "tipoNombre": "Bebé Unicornio",
+      "descripcion": "Si sale de tu Establo o vuelve a tu mano, regresa a la Guardería.",
+      "imagen": "img-79.png"
+    }
+  ]
+}
